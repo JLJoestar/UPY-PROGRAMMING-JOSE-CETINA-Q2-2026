@@ -39,7 +39,7 @@ To run the integration script locally, execute the following command in your ter
 
 python Classwork8/CW08.py
 
-### 🔹 Classwork 09: Spanish Verb Conjugator
+### 🔹 CW09: Spanish Verb Conjugator
 
 **Description:**
 An automated application designed to process and execute Spanish verb conjugations utilizing Python. The system targets linguistic logic structures by mapping verb endings (`-ar`, `-er`, `-ir`) and processing them through iterative loops and decision-making matrices for different grammatical tenses and modes.
@@ -54,8 +54,7 @@ This project fulfills the full development cycle required by the course, incorpo
 **Execution Instructions:**
 To run the verb conjugator program locally, execute the following command in your terminal:
 
-```bash
-python Classwork-09-Spanish-Verb-Conjugator/CW09.py
+Classwork-09-Spanish-Verb-Conjugator/CW09.py
 
 **AI Use Declaration:**
 No AI tools were used during the algorithmic development, logic design, or version control setup of this specific assignment. All code, pseudocode, and flowcharts were created entirely by the author following course guidelines.
