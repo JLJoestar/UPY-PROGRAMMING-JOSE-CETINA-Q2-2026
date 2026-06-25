@@ -1,0 +1,26 @@
+# INPUT
+ESCRIBIR "Ingrese verbo: "
+LEER verbo
+
+# PROCESS
+# List of pronouns (required structure)
+ARREGLO pronombres = ['yo', 'tu', 'el', 'nosotros', 'vosotros', 'ellos']
+
+# Dictionary of endings by verb type (required structure)
+SI ending ENTONCES
+    term_ar = ['o', 'as', 'a', 'amos', 'ais', 'an']
+    term_er = ['o', 'es', 'e', 'emos', 'eis', 'en']
+    term_ir = ['o', 'es', 'e', 'imos', 'is', 'en']
+
+# Get stem (verb minus last 2 letters) and ending (last 2 letters)
+stem <- SUBSTR(verbo, 1, LONGITUD(verbo) - 2)
+ending <- SUBSTR(verbo, LONGITUD(verbo) - 1, LONGITUD(verbo))
+
+# Look up the matching endings list in the dictionary
+endings_list <- SELECCIONAR_ARREGLO(ending)
+
+# OUTPUT
+PARA index, pronombre EN ENUMERATE(pronombres) HACER
+    terminacion <- endings_list[index]
+    ESCRIBIR pronombre + " " + stem + terminacion
+FIN PARA

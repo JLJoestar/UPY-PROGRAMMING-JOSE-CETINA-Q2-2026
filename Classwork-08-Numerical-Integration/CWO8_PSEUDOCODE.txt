@@ -1,0 +1,62 @@
+# INPUT
+ESCRIBIR "Escribe el extremo izquierdo del intervalo: "
+LEER a
+ESCRIBIR "Escribe el extremo derecho del intervalo: "
+LEER b
+ESCRIBIR "Escribe la función a integrar: "
+LEER f_x
+ESCRIBIR "Escriba el método de integración (LRM/RRM/MRM/TRAP): "
+LEER metodo
+
+# PROCESS
+SI "pi" ESTA_EN a ENTONCES
+    a <- VALOR_PI()
+SINO
+    a <- CONVERTIR_A_DECIMAL(a)
+FIN SI
+    
+SI "pi" ESTA_EN b ENTONCES
+    b <- VALOR_PI()
+SINO
+    b <- CONVERTIR_A_DECIMAL(b)
+FIN SI
+    
+norte <- 1000
+h <- (b - a) / norte
+area <- 0.0
+cambio <- 0
+constante <- 0
+variable <- 0
+
+SI metodo == "RRM" ENTONCES
+    cambio <- 1
+FIN SI
+    
+SI metodo == "MRM" ENTONCES
+    constante <- h / 2
+FIN SI
+    
+SI metodo == "TRAP" ENTONCES
+    variable <- 1
+    f_0 <- REEMPLAZAR(f_x, "incógnita", CONVERTIR_A_TEXTO(a))
+    area <- area + (h / 2) * EVALUAR(f_0)
+    
+    PARA i DESDE variable HASTA (norte - 1) CON PASO 1 HACER
+        xi <- a + i * h
+        f_xi <- REEMPLAZAR(f_x, "incógnita", CONVERTIR_A_TEXTO(xi))
+        area <- area + (h / 2) * 2 * EVALUAR(f_xi)
+    FIN PARA
+        
+    f_xn <- REEMPLAZAR(f_x, "incógnita", CONVERTIR_A_TEXTO(b))
+    area <- area + (h / 2) * EVALUAR(f_xn)
+    
+SINO
+    PARA i DESDE cambio HASTA (norte + cambio - 1) CON PASO 1 HACER
+        xi <- a + i * h
+        altura <- REEMPLAZAR(f_x, "incógnita", CONVERTIR_A_TEXTO(xi + constante))
+        area <- area + h * EVALUAR(altura)
+    FIN PARA
+FIN SI
+    
+# OUTPUT
+ESCRIBIR "La integración de " + f_x + " es " + CONVERTIR_A_TEXTO(area)
