@@ -56,5 +56,22 @@ To run the verb conjugator program locally, execute the following command in you
 
 Classwork-09-Spanish-Verb-Conjugator/CW09.py
 
+### 🔹 CW10: School Management System
+
+**Description:**
+A comprehensive Python application developed to simulate a foundational School Management System. This project integrates core data engineering principles by handling basic database operations, structuring student records, managing institutional metrics, and utilizing iterative validation loops to ensure information accuracy.
+
+The project encompasses the complete logical pipeline required by the course, maintaining full alignment between architectural pseudocode planning, structural flowcharts, and the production script.
+
+**Key Features:**
+* **Academic Pseudocode (`PPP.txt`):** Formatted strictly in plain English utilizing standard assignment arrows (`←`) and comment hashes (`#`) to decouple algorithmic logic from language-specific syntax.
+* **System Architecture (`Flowchart.png`):** A thorough logic diagram mapping out the decision trees for system modes and the precise iteration flows for administrative data routines.
+* **Segmented Source Code (`school_management_system.py`):** An operational script neatly partitioned and labeled within standard architectural boundaries: `# INPUT`, `# PROCESS`, and `# OUTPUT`.
+
+**Execution Instructions:**
+To run the school management system locally, execute the following command in your terminal:
+
+python Classwork-10-School-Management-System/school_management_system.py
+
 **AI Use Declaration:**
 No AI tools were used during the algorithmic development, logic design, or version control setup of this specific assignment. All code, pseudocode, and flowcharts were created entirely by the author following course guidelines.
