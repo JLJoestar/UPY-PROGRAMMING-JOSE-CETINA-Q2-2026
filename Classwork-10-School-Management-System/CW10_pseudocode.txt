@@ -1,0 +1,101 @@
+# INPUT
+# (Estructuras de datos inicializadas globalmente al inicio)
+DICCIONARIO usuarios = { ... base de datos de usuarios ... }
+TUPLA materias = ("Matemáticas", "Programación", "Inglés")
+DICCIONARIO calificaciones = { ... notas de los alumnos ... }
+
+LOGICO logged_in <- FALSO
+CADENA usuario_actual <- ""
+
+# PROCESS (Login Verification)
+MIENTRAS logged_in == FALSO HACER
+    ESCRIBIR "Usuario: "
+    LEER username
+    ESCRIBIR "Contraseña: "
+    LEER password
+    
+    SI EXISTE_LLAVE(usuarios, username) Y usuarios[username]["password"] == password ENTONCES
+        logged_in <- VERDADERO
+        usuario_actual <- username
+        ESCRIBIR "Bienvenido, " + usuarios[username]["nombre"] + " (" + usuarios[username]["rol"] + ")"
+    SINO
+        ESCRIBIR "Credenciales incorrectas. Intente de nuevo."
+    FIN SI
+FIN MIENTRAS
+
+CADENA rol <- usuarios[usuario_actual]["rol"]
+
+# PROCESS & OUTPUT BRANCHING BY ROLE
+SI rol == "alumno" ENTONCES
+    # --- STUDENT MENU ---
+    ESCRIBIR "--- Boleta de " + usuarios[usuario_actual]["nombre"] + " ---"
+    CONJUNTO aprobadas <- CREAR_CONJUNTO_VACIO()
+    
+    PARA CADA materia EN materias HACER
+        REAL nota <- calificaciones[usuario_actual][materia]
+        ESCRIBIR materia + ": " + CONVERTIR_A_TEXTO(nota)
+        
+        SI nota >= 8.0 ENTONCES
+            AGREGAR_A_CONJUNTO(aprobadas, materia)
+        FIN SI
+    FIN PARA
+    
+    CONJUNTO todos_las_materias <- CONVERTIR_A_CONJUNTO(materias)
+    CONJUNTO pendientes <- DIFERENCIA_CONJUNTOS(todos_las_materias, aprobadas)
+    
+    ESCRIBIR "Materias aprobadas: " + CONVERTIR_A_TEXTO(aprobadas)
+    ESCRIBIR "Materias pendientes: " + CONVERTIR_A_TEXTO(pendientes)
+
+SI_NO_SI rol == "maestro" ENTONCES
+    # --- TEACHER MENU ---
+    ESCRIBIR "--- Lista de Alumnos ---"
+    PARA CADA usr, datos EN usuarios HACER
+        SI datos["rol"] == "alumno" ENTONCES
+            ESCRIBIR "- " + usr + ": " + datos["nombre"]
+        FIN SI
+    FIN PARA
+    
+    ESCRIBIR "Alumno (username): "
+    LEER alumno_target
+    
+    SI EXISTE_LLAVE(usuarios, alumno_target) Y usuarios[alumno_target]["rol"] == "alumno" ENTONCES
+        ESCRIBIR "Materia: "
+        LEER materia_target
+        
+        SI ELEMENTO_EN_COLECCION(materia_target, materias) ENTONCES
+            ESCRIBIR "Nueva calificación: "
+            LEER nueva_nota
+            calificaciones[alumno_target][materia_target] <- CONVERTIR_A_REAL(nueva_nota)
+            ESCRIBIR "Calificación actualizada con éxito."
+        SINO
+            ESCRIBIR "Error: La materia especificada no existe."
+        FIN SI
+    SINO
+        ESCRIBIR "Error: El usuario no existe o no es un alumno."
+    FIN SI
+
+SI_NO_SI rol == "coordinador" ENTONCES
+    # --- COORDINATOR MENU ---
+    ESCRIBIR "=== REPORTE GENERAL DE COORDINACIÓN (SOLO LECTURA) ==="
+    
+    ESCRIBIR "1. Lista de Profesores:"
+    PARA CADA usr, datos EN usuarios HACER
+        SI datos["rol"] == "maestro" ENTONCES
+            ESCRIBIR "- " + datos["nombre"]
+        FIN SI
+    FIN PARA
+    
+    ESCRIBIR "2. Lista de Asignaturas:"
+    PARA CADA materia EN materias HACER
+        ESCRIBIR "- " + materia
+    FIN PARA
+    
+    ESCRIBIR "3. Reporte de Calificaciones por Estudiante:"
+    PARA CADA usr, materias_notas EN calificaciones HACER
+        CADENA nombre_completo <- usuarios[usr]["nombre"]
+        ESCRIBIR "Estudiante: " + nombre_completo + " (" + usr + ")"
+        PARA CADA materia EN materias HACER
+            ESCRIBIR "  * " + materia + ": " + CONVERTIR_A_TEXTO(materias_notas[materia])
+        FIN PARA
+    FIN PARA
+FIN SI
