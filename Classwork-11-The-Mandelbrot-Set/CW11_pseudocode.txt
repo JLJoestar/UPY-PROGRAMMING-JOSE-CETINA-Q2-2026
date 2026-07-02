@@ -1,0 +1,51 @@
+# Classwork 11 - The Mandelbrot Set Pseudocode
+
+START
+    # Initialize configuration dictionary
+    config ← Empty Dictionary
+    
+    # Open and read configuration file
+    OPEN "config.txt" in READ mode AS archivo
+    FOR EACH linea IN archivo DO
+        Clean linea by removing whitespaces
+        Split linea by "=" delimiter INTO clave, valor
+        config[clave] ← ConvertToFloat(valor)
+    END FOR
+    CLOSE archivo
+
+    # Parse integers for grid dimensions and max iterations
+    ancho ← ConvertToInteger(config["ancho"])
+    alto ← ConvertToInteger(config["alto"])
+    max_iter ← ConvertToInteger(config["max_iter"])
+
+    # Open output CSV file
+    OPEN "clase.csv" in WRITE mode AS salida
+    WRITE TO salida "fila,columna,iteraciones\n"
+
+    # Main loops to iterate through every pixel in the grid
+    FOR fila FROM 0 TO alto - 1 DO
+        FOR columna FROM 0 TO ancho - 1 DO
+            
+            # Map pixel coordinates to the complex plane numbers
+            real ← config["real_min"] + (columna / ancho) * (config["real_max"] - config["real_min"])
+            imag ← config["imag_min"] + (fila / alto) * (config["imag_max"] - config["imag_min"])
+            
+            c ← CreateComplexNumber(real, imag)
+            z ← CreateComplexNumber(0, 0)
+            iteraciones ← 0
+            
+            # Evaluate if the complex number escapes to infinity
+            WHILE (AbsoluteValue(z) <= 2) AND (iteraciones < max_iter) DO
+                z ← (z * z) + c
+                iteraciones ← iteraciones + 1
+            END WHILE
+            
+            # Write the result row to the CSV file
+            WRITE TO salida CONCATENATE(fila, ",", columna, ",", iteraciones, "\n")
+            
+        Fin FOR
+    End FOR
+
+    CLOSE salida
+    PRINT "DONE"
+END
