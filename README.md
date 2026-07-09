@@ -119,13 +119,13 @@ The suite aligns structural execution with standard reliability engineering prin
 **Execution Instructions:**
 To execute any of the refactored, error-immune scripts locally, navigate into the workspace folder and run the targeted script from your terminal:
 
-# To run the Refactored Check Digit Calculator
+To run the Refactored Check Digit Calculator
 python Classwork-13-Error-Handling/check_digit_calculator.py
 
-# To run the Refactored Numerical Integration
+To run the Refactored Numerical Integration
 python Classwork-13-Error-Handling/numerical_integration.py
 
-# To run the Refactored Spanish Verb Conjugator
+To run the Refactored Spanish Verb Conjugator
 python Classwork-13-Error-Handling/spanish_verb_conjugator.py
 
 **AI Use Declaration:**
