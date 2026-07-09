@@ -103,5 +103,30 @@ The application implements standard data visualization architectures: transformi
 To run the Mandelbrot rendering script locally, ensure the processed `clase.csv` and a valid `config.txt` are located in your working workspace, and execute:
 python Classwork-12-Mandelbrot-Renderer/mandelbrot_renderer.py
 
+
+### 🔹 Classwork 13: Error Handling (CW07 to CW09 Refactoring)
+
+**Description:**
+A comprehensive code refactoring project focused on implementing robust error handling architecture across previous software assignments (`CW07`, `CW08`, and `CW09`). This assignment structures persistent input validation loops and exceptions matrices to secure applications against malformed data streams, invalid data types, mathematical anomalies, and runtime anomalies without risking systemic program collapse.
+
+The suite aligns structural execution with standard reliability engineering principles, utilizing specialized try-except blocks to catch boundary constraints before processing pipeline segments.
+
+**Key Features:**
+* **Robust Check Digit Calculator (`CW07`):** Integrates nested validation blocks ensuring input sequences match rigorous standard alphanumeric boundaries, handling dynamic `ValueError` structures during character casting.
+* **Fault-Tolerant Numerical Integration (`CW08`):** Restructures analytical logic sequences to capture integration boundaries, preventing script crashes triggered by math domain boundaries like `ZeroDivisionError`, `SyntaxError` within `eval()`, or illegal inputs.
+* **Immune Spanish Verb Conjugator (`CW09`):** Hardens linguistic lookup arrays via conditional guards, managing custom string criteria and handling `KeyError` anomalies gracefully during linguistic dictionary lookups.
+
+**Execution Instructions:**
+To execute any of the refactored, error-immune scripts locally, navigate into the workspace folder and run the targeted script from your terminal:
+
+# To run the Refactored Check Digit Calculator
+python Classwork-13-Error-Handling/check_digit_calculator.py
+
+# To run the Refactored Numerical Integration
+python Classwork-13-Error-Handling/numerical_integration.py
+
+# To run the Refactored Spanish Verb Conjugator
+python Classwork-13-Error-Handling/spanish_verb_conjugator.py
+
 **AI Use Declaration:**
 No AI tools were used during the algorithmic development, logic design, or version control setup of this specific assignment. All code, pseudocode, and flowcharts were created entirely by the author following course guidelines.
