@@ -8,20 +8,21 @@ check = True
 while check:
     try:
         rol = input("Ingrese el rol: ")
-        
-        # Validación de que exista el guion antes de separar
         if "-" not in rol:
-            raise ValueError("El rol debe contener un guion '-'")
+            raise ValueError("No tiene el formato XXXXXXXXX-X")
+        if rol.count("-") != 1:
+            raise ValueError("No tiene el formato XXXXXXXXX-X")
             
         rol_sin_digito, digito = rol.split("-")
         
-        # Validación de caracteres numéricos
         if not rol_sin_digito.isnumeric() or not digito.isnumeric():
             raise ValueError("El rol o el dígito verificador contienen caracteres no numéricos")
             
         check = False
     except ValueError as e:
-        print(f"Rol incorrecto: {e}")
+        print(f"Rol inválido: {e}")
+    except ValueError as e:
+        print(f"Rol inválido: {e}")
 
 
 # PROCESS
@@ -40,7 +41,6 @@ total = suma % 11
 
 verificador = 11 - total
 
-# Validación del dígito verificador usando la excepción personalizada
 try:
     if verificador != int(digito):
         raise DigitoVerificadorError(f"El digito verificado no coincide, calculado: {verificador}")
