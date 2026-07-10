@@ -1,33 +1,37 @@
-
 # INPUT
-
 check = True
 while check:
     try:
-        verbo = input("Ingrese un verbo en infinitivo (ej. hablar, comer, vivir): ").strip().lower()
+        verbo = input("Ingrese un verbo en infinitivo (ej. hablar, comer, vivir): ")
         
-        if len(verbo) < 3:
-            raise ValueError("La palabra es demasiado corta para ser un verbo válido.")
+        if verbo != verbo.strip():
+            raise ValueError("El verbo no debe tener espacios extra")
             
-        if not verbo.isalpha():
-            raise ValueError("El verbo solo debe contener letras (sin números ni símbolos).")
+        if verbo != verbo.lower():
+            raise ValueError("El verbo debe escribirse en minúsculas")
+            
+        if not verbo or not verbo.isalpha():
+            raise ValueError("El verbo debe terminar en ar, er o ir")
+            
+        if len(verbo) < 3:
+            raise KeyError("El verbo debe terminar en ar, er o ir")
             
         ending = verbo[-2:]
-        
         valid_endings = ['ar', 'er', 'ir']
+        
         if ending not in valid_endings:
-            raise KeyError(f"La terminación '-{ending}' no es un infinitivo válido en español.")
+            raise KeyError("El verbo debe terminar en ar, er o ir")
             
         check = False
         
-    except ValueError as e:
-        print(f" [ValueError]: {e} Intente de nuevo.\n")
-    except KeyError as e:
-        print(f" [KeyError]: {e} Recuerde usar verbos terminados en -ar, -er o -ir. Intente de nuevo.\n")
+    except (ValueError, KeyError) as e:
+        if "escribirse en minúsculas" in str(e) or "espacios extra" in str(e):
+            print(e)
+        else:
+            print("El verbo debe terminar en ar, er o ir")
 
 # PROCESS
-
-pronombres = ['yo', 'tu', 'el', 'nosotros', 'vosotros', 'ellos']
+pronombres = ['Yo', 'Tú', 'Él', 'Nosotros', 'Vosotros', 'Ellos']
 
 terminaciones = {
     'ar': ['o', 'as', 'a', 'amos', 'ais', 'an'],
@@ -39,7 +43,6 @@ stem = verbo[:-2]
 endings_list = terminaciones[ending]
 
 # OUTPUT
-print(f"\n--- Conjugación del verbo: {verbo} ---")
 for index, pronombre in enumerate(pronombres):
     terminacion = endings_list[index]
     print(f"{pronombre} {stem}{terminacion}")
