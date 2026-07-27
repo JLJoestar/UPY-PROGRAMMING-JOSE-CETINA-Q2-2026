@@ -1,0 +1,226 @@
+PPP (Pseudocode Programming Process) - RECURSIVE FUNCTIONS
+
+START
+    # INPUT / SETUP
+    Define sample_number = 5
+    Define sample_dict = {"a": 1, "b": {"c": 2}}
+
+    # PROCESS & TESTING
+    Print "Running Recursive Functions Tests..."
+    
+    Call recursiva(sample_number)
+    Call fibonacci(sample_number)
+    Call factorial(sample_number)
+    Call multiplicacion_recursiva(4, 3)
+    Call division_entera_recursiva(17, 5)
+    Call potencia_recursiva(2, 5)
+    Call serie_collatz(6)
+    Call aplanar_json(sample_dict)
+
+    # OUTPUT
+    Print "All tests executed safely without crashing."
+END
+
+------------------------------------------------------
+
+FUNCTION: recursiva(n)
+START
+    # ERROR HANDLING
+    IF n is not an integer THEN
+        RETURN "Error: Input must be an integer."
+    END IF
+    IF n < 0 THEN
+        RETURN "Error: Input must be a non-negative integer."
+    END IF
+
+    # BASE CASE
+    IF n == 0 THEN
+        RETURN "Done!"
+    # RECURSIVE CASE
+    ELSE
+        Print n
+        RETURN Call recursiva(n - 1)
+    END IF
+END
+
+------------------------------------------------------
+
+FUNCTION: fibonacci(n)
+START
+    # ERROR HANDLING
+    IF n is not an integer THEN
+        RETURN "Error: Input must be an integer."
+    END IF
+    IF n < 0 THEN
+        RETURN "Error: Input must be a non-negative integer."
+    END IF
+
+    # BASE CASE
+    IF n == 0 OR n == 1 THEN
+        RETURN n
+    # RECURSIVE CASE
+    ELSE
+        RETURN Call fibonacci(n - 1) + Call fibonacci(n - 2)
+    END IF
+END
+
+------------------------------------------------------
+
+FUNCTION: factorial(n)
+START
+    # ERROR HANDLING
+    IF n is not an integer THEN
+        RETURN "Error: Input must be an integer."
+    END IF
+    IF n < 0 THEN
+        RETURN "Error: Input must be a non-negative integer."
+    END IF
+
+    # BASE CASE
+    IF n == 0 OR n == 1 THEN
+        RETURN 1
+    # RECURSIVE CASE
+    ELSE
+        RETURN Call factorial(n - 1) * n
+    END IF
+END
+
+------------------------------------------------------
+
+FUNCTION: multiplicacion_recursiva(n, m)
+START
+    # ERROR HANDLING
+    IF n or m are invalid types OR m is not an integer THEN
+        RETURN "Error: Invalid data types."
+    END IF
+    IF m < 0 THEN
+        RETURN "Error: Multiplier (m) must be a non-negative integer."
+    END IF
+
+    # BASE CASE
+    IF m == 0 THEN
+        RETURN 0
+    # RECURSIVE CASE
+    ELSE
+        RETURN Call multiplicacion_recursiva(n, m - 1) + n
+    END IF
+END
+
+------------------------------------------------------
+
+FUNCTION: division_entera_recursiva(dividendo, divisor)
+START
+    # ERROR HANDLING
+    IF dividendo or divisor are not integers THEN
+        RETURN "Error: Inputs must be integers."
+    END IF
+    IF divisor <= 0 THEN
+        RETURN "Error: Divisor must be greater than 0."
+    END IF
+    IF dividendo < 0 THEN
+        RETURN "Error: Dividend must be a non-negative integer."
+    END IF
+
+    # BASE CASE
+    IF dividendo - divisor < 0 THEN
+        RETURN 0
+    # RECURSIVE CASE
+    ELSE
+        RETURN Call division_entera_recursiva(dividendo - divisor, divisor) + 1
+    END IF
+END
+
+------------------------------------------------------
+
+FUNCTION: potencia_recursiva(base, exponente)
+START
+    # ERROR HANDLING
+    IF base or exponente are invalid types THEN
+        RETURN "Error: Invalid data types."
+    END IF
+
+    # NEGATIVE EXPONENT CASE
+    IF exponente < 0 THEN
+        RETURN 1 / Call potencia_recursiva(base, -exponente)
+    END IF
+
+    # BASE CASE
+    IF exponente == 0 THEN
+        RETURN 1
+    # RECURSIVE CASE
+    ELSE
+        RETURN Call potencia_recursiva(base, exponente - 1) * base
+    END IF
+END
+
+------------------------------------------------------
+
+FUNCTION: serie_collatz(n)
+START
+    # ERROR HANDLING
+    IF n is not an integer THEN
+        RETURN "Error: Input must be an integer."
+    END IF
+    IF n <= 0 THEN
+        RETURN "Error: Input must be a positive integer strictly greater than 0."
+    END IF
+
+    # BASE CASE
+    IF n == 1 THEN
+        Print "END!"
+        RETURN 0
+    # RECURSIVE CASE
+    ELSE
+        IF n % 2 == 0 THEN
+            Print n // 2
+            RETURN Call serie_collatz(n // 2)
+        ELSE
+            Print 3 * n + 1
+            RETURN Call serie_collatz(3 * n + 1)
+        END IF
+    END IF
+END
+
+------------------------------------------------------
+
+FUNCTION: aplanar_json(diccionario, clave_padre='', separador='.')
+START
+    # ERROR HANDLING
+    IF diccionario is not a dict THEN
+        RETURN "Error: Input must be a dictionary."
+    END IF
+
+    Define elementos = empty list
+
+    TRY
+        FOR EACH (key, value) IN diccionario DO
+            IF clave_padre is not empty THEN
+                Define nueva_llave = clave_padre + separador + key
+            ELSE
+                Define nueva_llave = key as string
+            END IF
+
+            IF value is a dictionary THEN
+                Define sub_aplanado = Call aplanar_json(value, nueva_llave, separador)
+                Append items of sub_aplanado to elementos
+            ELSE IF value is a list THEN
+                FOR EACH index i, item IN value DO
+                    Define llave_lista = nueva_llave + separador + i
+                    IF item is a dictionary OR list THEN
+                        Define sub_aplanado = Call aplanar_json(item, llave_lista, separador)
+                        Append items of sub_aplanado to elementos
+                    ELSE
+                        Append (llave_lista, item) tuple to elementos
+                    END IF
+                END FOR
+            ELSE
+                Append (nueva_llave, value) tuple to elementos
+            END IF
+        END FOR
+
+        RETURN convert elementos to dictionary
+
+    EXCEPT Exception AS e THEN
+        RETURN "Error processing dictionary: " + e
+    END TRY
+END
