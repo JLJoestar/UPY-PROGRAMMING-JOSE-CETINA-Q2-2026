@@ -1,0 +1,77 @@
+PPP (Pseudocode Programming Process) - PYGAME VERTICAL LINES
+
+START
+    # INPUT / SETUP
+    Define config = empty dictionary
+
+    # READ CONFIGURATION FILE
+    TRY
+        FOR EACH line IN 'config.txt' DO
+            Clean line and Split by '=' into parameter and value
+            
+            IF ',' in value THEN
+                Convert value to tuple of integers and Store in config[parameter]
+            ELSE IF '.' in value THEN
+                Convert value to float and Store in config[parameter]
+            ELSE
+                Convert value to integer and Store in config[parameter]
+            END IF
+        END FOR
+    EXCEPT Exception
+        Print "Error loading config file."
+    END TRY
+
+    # INITIALIZE GRAPHICS ENGINE
+    Call Initialize Pygame
+    Define screen = Create window with size (config['width'], config['height'])
+
+    # PROCESS & TESTING
+    Define x_positions = Call calculate_x_positions(screen, config['vertical_lines'], config['space'])
+    Print x_positions  # FOR SANITY CHECK!
+
+    # MAIN LOOP
+    Define running = True
+    WHILE running IS True DO
+        FOR EACH event IN Pygame events DO
+            IF event type IS QUIT THEN
+                running = False
+            END IF
+        END FOR
+
+        Call Fill screen with color config['bg_color']
+        Call draw_vertical_lines(screen, x_positions, config['line_color'])
+        Call Refresh display screen
+    END WHILE
+
+    # CLEANUP & OUTPUT
+    Call Close Pygame
+END
+
+------------------------------------------------------
+
+FUNCTION: calculate_x_positions(surface, vertical_lines, space)
+START
+    Define x_positions = empty list
+    Define width = Get surface width
+    Define spacing = space * width
+    Define central_line = width / 2
+    Define offset = - (vertical_lines / 2) as integer
+
+    FOR i FROM 1 TO vertical_lines DO
+        Append (central_line + offset * spacing) to x_positions
+        offset = offset + 1
+    END FOR
+
+    RETURN x_positions
+END
+
+------------------------------------------------------
+
+FUNCTION: draw_vertical_lines(surface, x_positions, color, width=2)
+START
+    Define height = Get surface height
+
+    FOR EACH x IN x_positions DO
+        Call Draw line on surface from (x, 0) to (x, height) with color and width
+    END FOR
+END
